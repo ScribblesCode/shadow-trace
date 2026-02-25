@@ -1,18 +1,21 @@
+import streamlit as st   # This library helps us create a web interface for our tool
 import requests    # This library lets your code "talk" to the internet
 
 # Header - this gives your tool that "Command Center" feel
-print("_" * 40)
-print("    S H A D O W _ T R A C E    v1.0    ")
-print("      OSINT  RECONNAISSANCE        ")
-print("_" * 40)
+st.text("_" * 40)
+st.text("    S H A D O W _ T R A C E    v1.0    ")
+st.text("      OSINT  RECONNAISSANCE        ")
+st.text("_" * 40)
 
 def main():
     # 1. Get the target username from the user
-    username = input("\n[!] ENTER TARGET USERNAME: ")
+    username = st.text_input("\n[!] ENTER TARGET USERNAME: ")
     print(f"[*] SEARCHING DIGITAL FOOTPRINT FOR: {username}. . .\n")
 
     # 2. Define the 'intelligence' list (the sites we want to probe)
     # Be careful with the syntax here: 'Name': 'URL'
+    if st.button("INITIATE TRACE"):
+        st.text(f"[*] SEARCHING DIGITAL FOOTPRINT FOR: {username}. . .\n")
     targets = {
         "GitHub": f"https://github.com/{username}",
         "Reddit": f"https://www.reddit.com/user/{username}",
@@ -34,12 +37,12 @@ def main():
 
             # Check the status code. 200 = success (User found)
             if response.status_code == 200:
-                print(f"[+] [FOUND] {site_name}: {url}")
+                st.text(f"[+] [FOUND] {site_name}: {url}")
             else:
-                print(f"[-] [MISS] {site_name}")
+                st.text(f"[-] [MISS] {site_name}")
                 
         except Exception:
-            print(f"[!] [ERROR] Could not reach {site_name}")
+            st.text(f"[!] [ERROR] Could not reach {site_name}")
 
             #4. Save findings to a report file
             # 'w' means 'write' mode - it will create a new file if it doesn't exist
@@ -53,7 +56,7 @@ def main():
 
         print(f"\n[+] RECON DATA SAVED TO: trace_report.txt")
         print("-" * 40)
-        print("[*] SCAN COMPLETE. STAY DARK.")
+        st.text("[*] SCAN COMPLETE. STAY DARK.")
 
 
     print("\n[*] SCAN COMPLETE.")
